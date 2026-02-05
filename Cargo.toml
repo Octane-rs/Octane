@@ -1,0 +1,63 @@
+cargo-features = ["panic-immediate-abort", "trim-paths"]
+
+[package]
+name = "octane-rs"
+version = "0.1.0"
+edition = "2024"
+authors = ["AGMBK"]
+description = "High-performance, real-time Android screen mirroring and control."
+repository = "https://github.com/Octane-rs/Octane"
+homepage = "https://github.com/Octane-rs/Octane"
+publish = false
+license = "MIT"
+readme = "README.md"
+keywords = []
+categories = []
+
+[[bin]]
+name = "Octane"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.100"
+bytemuck = "1.25.0"
+chrono = "0.4.43"
+eframe = { version = "0.33.3", default-features = false, features = ["default_fonts", "persistence", "serde", "wgpu"] }
+ffmpeg-next = { version = "7.1.0", default-features = false, features = [
+    "format",
+    "software-scaling"
+] }
+parking_lot = "0.12.5"
+scrcpy-launcher = { git = "https://github.com/Octane-rs/scrcpy-launcher.git", rev = "5e768a623c1913e7c5312075c74d3f8f1e36d35d" }
+serde = { version = "1.0.228", features = ["derive"] }
+thiserror = "2.0.18"
+tokio = { version = "1.49.0", features = ["fs", "io-util", "macros", "rt", "rt-multi-thread", "time"] }
+tracing = { version = "0.1.44", default-features = false }
+tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
+wgpu = { version = "27.0.1", default-features = false, features = ["parking_lot", "std", "vulkan", "wgsl"] }
+
+[profile.dev.package.eframe]
+codegen-units = 1
+opt-level = 3
+
+[profile.dev.package.ffmpeg-next]
+codegen-units = 1
+opt-level = 3
+
+[profile.dev.package.wgpu]
+codegen-units = 1
+opt-level = 3
+
+[profile.release]
+debug = false
+strip = "symbols"
+debug-assertions = false
+overflow-checks = false
+lto = "fat"
+panic = "abort"
+codegen-units = 1
+trim-paths = "all"
+
+[profile.release.package."*"]
+strip = "symbols"
+codegen-units = 1

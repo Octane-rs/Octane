@@ -1,0 +1,12 @@
+[build]
+target = "x86_64-pc-windows-msvc"
+
+[target.x86_64-pc-windows-msvc]
+rustflags = []
+
+#[target.x86_64-pc-windows-gnu]
+#linker = "C:\\msys64\\mingw64\\bin\\gcc.exe"
+
+[env]
+FFMPEG_DIR = { value = "assets/ffmpeg-7.1.1-full_build-shared", relative = true }
+RUST_LOG = "info,Octane=debug,scrcpy_launcher=debug,scrcpy_client=debug,scrcpy_proto=debug,wgpu_hal=warn"
