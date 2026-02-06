@@ -14,6 +14,9 @@ readme = "README.md"
 keywords = []
 categories = []
 
+[package.metadata.dist]
+dist = true
+
 [[bin]]
 name = "Octane"
 path = "src/main.rs"
@@ -61,3 +64,8 @@ trim-paths = "all"
 [profile.release.package."*"]
 strip = "symbols"
 codegen-units = 1
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
