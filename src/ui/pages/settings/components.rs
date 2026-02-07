@@ -151,13 +151,24 @@ pub fn card(ui: &mut Ui, title: &str, content: impl FnOnce(&mut Ui)) {
 
 /// A row with a label on the left and a toggle/checkbox on the right.
 pub fn switch_row(ui: &mut Ui, label: &str, value: &mut bool) {
-    let (rect, mut response) =
-        ui.allocate_exact_size(Vec2::new(ui.available_width(), 20.0), Sense::click());
+    let layout = ui.horizontal(|ui| {
+        ui.label(RichText::new(label));
+        ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
+            if ui
+                .add(egui::Checkbox::new(value, ""))
+                .on_hover_cursor(CursorIcon::PointingHand)
+                .changed()
+            {
+                // *value = !*value;
+            }
+        });
+    });
+    let mut response = layout.response.interact(Sense::click());
 
     if response.hovered() {
         ui.ctx().set_cursor_icon(CursorIcon::PointingHand);
         ui.painter().rect_filled(
-            rect,
+            response.rect,
             2.0,
             ui.visuals().widgets.active.bg_fill.gamma_multiply(0.1),
         );
@@ -167,15 +178,6 @@ pub fn switch_row(ui: &mut Ui, label: &str, value: &mut bool) {
         *value = !*value;
         response.mark_changed();
     }
-
-    ui.horizontal(|ui| {
-        ui.label(RichText::new(label));
-        ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
-            if ui.add(egui::Checkbox::new(value, "")).changed() {
-                // *value = !*value;
-            }
-        });
-    });
 }
 
 /// A row with a dropdown.
