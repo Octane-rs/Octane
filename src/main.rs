@@ -167,6 +167,10 @@ async fn create_adb_binary(adb_path: impl AsRef<Path>) -> Result<(), io::Error> 
 
     clean_path(adb_path).await?;
 
+    if let Some(parent) = adb_path.parent() {
+        fs::create_dir_all(parent).await?;
+    }
+
     let mut options = File::options();
     options.write(true).create_new(true);
 
