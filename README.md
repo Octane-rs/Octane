@@ -33,6 +33,10 @@ So far vulkan hw decoding is implemented using ffmpeg decoder. The issue is the 
 rendering (wgpu) vulkan device and the ffmpeg one. The goal here is to implement direct rendering, meaning the frame is
 not copied to the cpu for the pixel conversion, but stays in VRAM.
 
+## TODO
+
+First time not using a monorepo and it is plain awful, let's refactor that.
+
 ## Utils
 
 ```bash
