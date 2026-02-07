@@ -2,7 +2,7 @@ cargo-features = ["panic-immediate-abort", "trim-paths"]
 
 [package]
 name = "octane-rs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 authors = ["AGMBK"]
 description = "High-performance, real-time Android screen mirroring and control."
